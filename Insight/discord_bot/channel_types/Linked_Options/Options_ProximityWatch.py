@@ -6,6 +6,7 @@ from typing import List
 from sqlalchemy.exc import IntegrityError
 import InsightExc
 from . import opt_capradar
+from InsightUtilities import LimitManager
 
 
 class Options_ProximityIntel(opt_capradar):
@@ -14,6 +15,7 @@ class Options_ProximityIntel(opt_capradar):
         yield (self.InsightOption_rmRegSys, False)
         yield (self.InsightOptionRequired_maxage, True)
         yield (self.InsightOption_sync, False)
+        yield (self.InsightOption_minValue, False)
         yield from super(opt_capradar, self).yield_options()
 
     async def InsightOptionRequired_addRegSys(self, message_object: discord.Message):
@@ -111,6 +113,51 @@ class Options_ProximityIntel(opt_capradar):
         row = await opt_row()
         await self.delete_row(row)
         await self.reload(message_object)
+
+    async def InsightOption_minValue(self, message_object: discord.Message):
+        """Set minimum ISK value - Set the minimum ISK value for killmails."""
+
+        def get_number(input_val: str):
+            try:
+                input_val = input_val.strip()
+                num = "".join([c for c in input_val if c.isdigit() or c == '.'])
+                n_modifier = "".join(a.casefold() for a in input_val if a.isalpha())
+                num = float(num)
+                if n_modifier.startswith('b'):
+                    num = num * 1e+9
+                elif n_modifier.startswith('m'):
+                    num = num * 1e+6
+                elif n_modifier.startswith('k'):
+                    num = num * 1e+3
+                else:
+                    pass
+                return num
+            except:
+                raise InsightExc.userInput.NotFloat
+
+        def set_min_value(isk_val):
+            db: Session = self.cfeed.service.get_session()
+            try:
+                row: tb_Filter_systems = db.query(tb_Filter_systems).filter(tb_Filter_systems.channel_id == self.cfeed.channel_id).one()
+                row.minValue = isk_val
+                db.merge(row)
+                db.commit()
+            except Exception as ex:
+                print(ex)
+                raise InsightExc.Db.DatabaseError
+            finally:
+                db.close()
+
+        options = discord_options.mapper_return_noOptions(self.cfeed.discord_client, message_object)
+        options.set_main_header("Set the minimum isk value for killmails. Mails below this value will not be posted. "
+                                "Enter '0' for no limit.")
+        options.set_footer_text("Enter a number. Examples: 500m, 10 billion, 500,000: ")
+        resp = await options()
+        val = get_number(resp)
+        await self.cfeed.discord_client.loop.run_in_executor(None, partial(set_min_value, val))
+        await self.reload(message_object)
+        async with (await LimitManager.cm_hp(message_object.channel)):
+            await message_object.channel.send("Minimum ISK value is now set at: {:,.2f} ISK.".format(val))
 
 
 from discord_bot import discord_options

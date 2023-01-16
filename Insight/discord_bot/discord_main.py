@@ -218,7 +218,7 @@ class Discord_Insight_Client(discord.Client):
                 try:
                     async with (await LimitManager.cm(message)):
                         await message.channel.send(
-                            "{}\nUncaught exception: '{}'.".format(message.author.mention, str(ex.__class__.__name__)))
+                            "{}\nUncaught {} exception: '{}'.".format(message.author.mention, str(ex.__class__.__name__), ex))
                 except:
                     pass
                 await asyncio.sleep(20)
