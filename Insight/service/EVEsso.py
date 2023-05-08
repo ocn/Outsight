@@ -268,10 +268,10 @@ class EVEsso(object):
     def verify_jwt(self, token):
         """returns the decoded token or raises an exception if there is a problem"""
         try:
-            return jwt.decode(token, self.jwk_set, algorithms=self.jwk_set["alg"], issuer="login.eveonline.com")
+            return jwt.decode(token, self.jwk_set, algorithms=self.jwk_set["alg"], issuer="login.eveonline.com", options={"verify_aud": False})
         except JWTClaimsError:
             try:
-                return jwt.decode(token, self.jwk_set, algorithms=self.jwk_set["alg"], issuer="https://login.eveonline.com")
+                return jwt.decode(token, self.jwk_set, algorithms=self.jwk_set["alg"], issuer="https://login.eveonline.com", options={"verify_aud": False})
             except JWTClaimsError:
                 raise InsightExc.SSO.SSOerror("JWT verify failed as the issuer host / domain does not match the expected value.")
         except Exception as ex:
