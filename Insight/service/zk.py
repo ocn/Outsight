@@ -117,7 +117,7 @@ class zk(object):
         if no_identifier or identifier is None:
             return base_url
         else:
-            return "{}?queueID={}".format(base_url, identifier)
+            return "{}?queueID={}&ttw=10".format(base_url, identifier)
 
     def url_stream(self):
         return self.zk_stream_url

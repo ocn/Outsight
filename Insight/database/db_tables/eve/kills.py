@@ -123,8 +123,7 @@ class Kills(dec_Base.Base, table_row):
         other_x = self.object_location.pos_x
         other_y = self.object_location.pos_y
         other_z = self.object_location.pos_z
-        return math.sqrt(
-            pow(pos_x - other_x, 2) + pow(pos_y - other_y, 2) + pow(pos_z - other_z, 2)) / 1.496e+11
+        return math.sqrt(pow(pos_x - other_x, 2) + pow(pos_y - other_y, 2) + pow(pos_z - other_z, 2)) / 1.496e+11
 
     def filter_loss(self, filter_list=[], using_blacklist=False):
         """whitelist - True=in filter_list, False=not in filter list

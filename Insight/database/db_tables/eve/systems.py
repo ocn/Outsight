@@ -60,8 +60,7 @@ class Systems(dec_Base.Base, name_only, individual_api_pulling, index_api_updati
             other_x, other_y, other_z = other.pos_x, other.pos_y, other.pos_z
         if isinstance(other, tb_Filter_systems):
             other_x, other_y, other_z = other.object_item.pos_x, other.object_item.pos_y, other.object_item.pos_z
-        return math.sqrt(
-            pow(self.pos_x - other_x, 2) + pow(self.pos_y - other_y, 2) + pow(self.pos_z - other_z, 2)) / 9.4605284e15
+        return math.sqrt(pow(self.pos_x - other_x, 2) + pow(self.pos_y - other_y, 2) + pow(self.pos_z - other_z, 2)) / 9.4605284e15
 
     def gate_range(self, other, service_module):
         try:

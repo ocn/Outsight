@@ -165,7 +165,7 @@ class ConfigLoader(metaclass=InsightSingleton):
         self.parse_list("INSIGHT_ADMINS", "NULL", "NULL", False, "", False)
         self.parse_list("8BALL_RESPONSES", "NULL", "NULL", False, "Yes;No;Maybe", True)
         self.parse_int("DEFAULT_THREAD_COUNT", "NULL", "NULL",  False, 25, True)
-        self.parse_str("ZK_REDISQ_URL", "NULL", "NULL", False, "https://redisq.zkillboard.com/listen.php", True)
+        self.parse_str("ZK_REDISQ_URL", "NULL", "NULL", False, f"https://zkillredisq.stream/listen.php", True)
         self.parse_str("ZK_WS_URL", "NULL", "NULL", False, "wss://zkillboard.com/websocket/", True)
         self.parse_bool("ZK_ID_RESET", "NULL", "NULL", False, "FALSE", True)
         self.parse_int("REIMPORT_LOCATIONS_MINUTES", "NULL", "NULL", False, 43200, True)  # 30 days

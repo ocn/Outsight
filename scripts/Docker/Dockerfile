@@ -107,9 +107,11 @@ RUN apt-get update && apt-get install -y \
  zip \
  sudo
 
-#https://www.postgresql.org/download/linux/debian/
-RUN sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
-RUN curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
+# Add PostgreSQL's GPG key
+RUN curl -O https://www.postgresql.org/media/keys/ACCC4CF8.asc && apt-key add ACCC4CF8.asc
+
+# Switch to the archived PostgreSQL repo for buster
+RUN sh -c 'echo "deb http://apt-archive.postgresql.org/pub/repos/apt buster-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
 
 #https://www.psycopg.org/docs/install.html#install-from-source avoid using pre-compiled binary for psycopg2 driver
 RUN apt-get update && apt-get install -y \
