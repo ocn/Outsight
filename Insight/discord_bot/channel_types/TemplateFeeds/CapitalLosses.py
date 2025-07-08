@@ -18,6 +18,7 @@ class CapitalLosses(enFeed):
             db.add(dbRow.tb_Filter_groups(30, self.channel_id, load_fk=False))  # titan
             db.add(dbRow.tb_Filter_groups(547, self.channel_id, load_fk=False))  # carrier
             db.add(dbRow.tb_Filter_groups(485, self.channel_id, load_fk=False))  # dread
+            db.add(dbRow.tb_Filter_groups(4594, self.channel_id, load_fk=False))  # lancer
             db.add(dbRow.tb_Filter_groups(1538, self.channel_id, load_fk=False))  # fax
             db.add(dbRow.tb_Filter_groups(902, self.channel_id, load_fk=False))  # jf
             db.add(dbRow.tb_Filter_groups(883, self.channel_id, load_fk=False))  # rorq
@@ -37,7 +38,7 @@ class CapitalLosses(enFeed):
 
     @classmethod
     def get_template_desc(cls):
-        return "Capital Losses - Displays titan, supercarrier, carrier, dread, FAX, JF, and Rorqual losses."
+        return "Capital Losses - Displays titan, supercarrier, carrier, dread, lancer, FAX, JF, and Rorqual losses."
 
     def __str__(self):
         return "Capital Losses Feed"

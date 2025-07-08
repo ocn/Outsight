@@ -21,6 +21,7 @@ class LastShip(AbstractMultiEndpoint):
         self.regular_capitals = [
             547, # carrier
             485, #dreads
+            4594,# lancers
             1538, #fax
             883 # cap industrial
         ]

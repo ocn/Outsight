@@ -119,7 +119,7 @@ class Types(dec_Base.Base,name_only,index_api_updating,sde_impoter):
                         t.basePrice = cls.auto_adjust_helper(t.basePrice, 8e9, 95e9)
                     elif t.group_id == 1538:  # fax
                         t.basePrice = cls.auto_adjust_helper(t.basePrice, .7e9, 10e9)
-                    elif t.group_id == 485:  # dread
+                    elif t.group_id in [485, 4594]:  # dread, lancer
                         t.basePrice = cls.auto_adjust_helper(t.basePrice, .7e9, 15e9)
                     elif t.group_id == 547:  # carrier
                         t.basePrice = cls.auto_adjust_helper(t.basePrice, .7e9, 13e9)
@@ -145,7 +145,7 @@ class Types(dec_Base.Base,name_only,index_api_updating,sde_impoter):
                     d["isCap"] = True
                 else:
                     d["isSuperTitan"] = False
-                if group_id in [547, 485, 1538, 883]:
+                if group_id in [547, 485, 1538, 883, 4594]:
                     d["isCap"] = True
                 else:
                     d["isCap"] = False
